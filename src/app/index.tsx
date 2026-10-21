@@ -3,6 +3,7 @@ import {
   useAudioPlayer,
   useAudioPlayerStatus,
 } from "expo-audio";
+import { router } from "expo-router";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   ActivityIndicator,
@@ -21,6 +22,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 type Pokemon = {
   name: string;
   url: string;
+  id: number;
 };
 
 const POKEMON_API_URL =
@@ -196,7 +198,12 @@ export default function Index() {
 
     return (
       <Pressable
-        onPress={() => playCry(id)}
+        onPress={() => 
+          router.push({
+            pathname: "/pokemon/[id]",
+            params: { id: String(id) },
+          })
+        }
         style={({ pressed }) => [
           styles.card,
           pressed && styles.cardPressed,
@@ -345,7 +352,7 @@ export default function Index() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#f5f6fa",
+    backgroundColor: "#757070",
   },
   listContent: {
     flexGrow: 1,
